@@ -1,4 +1,7 @@
 var path = require("path");
+const { v4: uuidv4 } = require('uuid');
+const fs = require("fs");
+const dbJSON = require("../db/db.json");
 
 module.exports = function(app) {
     // route handling for GET requests
@@ -22,7 +25,7 @@ module.exports = function(app) {
         // Saves data to file by persisting in memory variable dbJSON to db.json file.
         // This is needed because when we turn off server we loose all memory data like pbJSON variable.
         // Saving to file allows us to read previous notes (before server was shutdown) from file.
-        fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(dbJSON), (err) => {
+        fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(dbJSON), (err) => {
           if (err) {
             return res.json({error: "Error writing to file"});
           }
@@ -30,5 +33,9 @@ module.exports = function(app) {
           return res.json(note);
         });
       });
+
+    app.delete("/api/notes", function(req,res) {
+        console.log(res)
+    })
   
   };
