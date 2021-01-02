@@ -1,7 +1,7 @@
 var path = require("path");
 const { v4: uuidv4 } = require('uuid');
 const fs = require("fs");
-const dbJSON = require("../db/db.json");
+let dbJSON = require("../db/db.json");
 
 module.exports = function(app) {
     // route handling for GET requests
@@ -34,8 +34,22 @@ module.exports = function(app) {
         });
       });
 
-    app.delete("/api/notes", function(req,res) {
-        console.log(res)
+    app.delete("/api/notes/:id", function(req,res) {
+        let noteId = req.params.id;
+        console.log(noteId);
+
+        const newNotes = dbJSON.filter(note => note.id !== noteId)
+
+        dbJSON = newNotes;
+
+        fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(dbJSON), (err) => {
+          if (err) {
+            return res.json({error: "Error writing to file"});
+          }
+      
+          return res.json(newNotes);
+        });
+
     })
   
   };
