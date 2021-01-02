@@ -1,13 +1,13 @@
 // NPM Requirements
 
 var express = require("express");
-
-// Create Express server
-const express = require("express");
 const { v4: uuidv4 } = require('uuid');
 const fs = require("fs");
-const dbJSON = require("./db.json");
+const dbJSON = require("./db/db.json");
 const path = require("path");
+
+// Create Express server
+var app = express();
 
 // Sets an initial port
 var PORT = process.env.PORT || 8080;
