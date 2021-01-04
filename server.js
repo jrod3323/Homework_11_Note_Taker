@@ -1,10 +1,6 @@
 // NPM Requirements
 
 var express = require("express");
-const { v4: uuidv4 } = require('uuid');
-const fs = require("fs");
-const dbJSON = require("./db/db.json");
-const path = require("path");
 
 // Create Express server
 var app = express();
